@@ -12,4 +12,4 @@ include: snakefiles + "call.py"
 
 rule all:
     input:
-        call_doc + "call.html"
+        #call_doc + "call.html"
