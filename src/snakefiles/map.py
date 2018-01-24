@@ -1,4 +1,4 @@
-rule map_bwa_index:
+rule map_hisat_index:
     input:
         raw_dir + "genome.fa"
     output:

@@ -21,6 +21,8 @@ install:
   - export PATH="/home/travis/miniconda3/bin:$PATH"
   - echo $PATH
   - bash src/install/conda_env.sh
+  - source activate smsk_tuxedo2
+  - Rscript src/install/install_r_packages.R
 
 script:
   - export PATH="/home/travis/miniconda3/bin:$PATH"
