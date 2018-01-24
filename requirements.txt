@@ -8,3 +8,4 @@ r-base==3.2.2
 r-devtools
 r-dplyr
 bioconductor-ballgown==2.2.0
+bioconductor-biocinstaller
