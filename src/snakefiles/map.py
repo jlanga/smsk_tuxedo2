@@ -52,7 +52,7 @@ rule map_hisat2_build:
 
 
 rule map_hisat2_align:
-    """Just map reads with hisat"""
+    """Map reads with hisat2 and convert to bam on the fly"""
     input:
         index_prefix= MAP + "reference",
         index_files=expand(
@@ -62,7 +62,7 @@ rule map_hisat2_align:
         forward=RAW + "{sample}_1.fq.gz",
         reverse=RAW + "{sample}_2.fq.gz"
     output:
-        sam = temp(MAP + "{sample}.sam")
+        bam = temp(MAP + "{sample}.bam")
     threads:
         1000
     log:
@@ -70,30 +70,18 @@ rule map_hisat2_align:
     benchmark:
         MAP + "hisat2_align_{sample}.benchmark"
     shell:
-        "hisat2 "
+        "(hisat2 "
             "--threads {threads} "
             "--dta "
             "-x {input.index_prefix} "
             "-1 {input.forward} "
             "-2 {input.reverse} "
-            "-S {output.sam} "
-        "2> {log}"
-
-
-
-rule map_samtools_sort:
-    """Use samtools to view + sort and convert to bam. original pipeline just sorted!"""
-    input:
-        sam = MAP + "{sample}.sam"
-    output:
-        bam = protected(MAP + "{sample}.bam")
-    threads:
-        1000
-    log:
-        MAP + "samtools_sort_{sample}.log"
-    benchmark:
-        MAP + "samtools_sort_{sample}.json"
-    shell:
-        "(samtools view -Shu {input.sam} "
-        "| samtools sort -@ {threads} -f - {output.bam}) "
+            "-S /dev/stdout "
+        "| samtools view "
+            "-Shu "
+            "/dev/stdin "
+        "| samtools sort "
+            "-@ {threads} "
+            "-f - "
+            "{output.bam}) "
         "2> {log}"
