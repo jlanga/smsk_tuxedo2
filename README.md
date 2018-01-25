@@ -1,4 +1,4 @@
-# smsk: A Snakemake skeleton to jumpstart projects
+# smsk_tuxedo2: snakemake pipeline to produce the tuxedo v2 pipeline from Nature protocols
 
 [![Build Status](https://travis-ci.org/jlanga/smsk_tuxedo2.svg?branch=master)](https://travis-ci.org/jlanga/smsk_tuxedo2)
 
