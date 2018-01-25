@@ -70,7 +70,7 @@ smsk
 
 ## 4. Workflow description
 
-### 4.1 Mapping with HISAT2
+### 4.1 Mapping with HISAT2 (`rule map`)
 
 - Index is build from scratch
 
@@ -78,13 +78,13 @@ smsk
 
 - Paired reads are mapped with HISAT2. Results are compressed to CRAM on the fly.
 
-### 4.2 Transcript assembly and quantification with StringTie
+### 4.2 Transcript assembly and quantification with StringTie (`rule quant`)
 
 - Using the exact parameters from Pertea et al. 2016
 
 - CRAM -> SAM conversion on the fly
 
-### 4.3 Differential expression analysis with Ballgown
+### 4.3 Differential expression analysis with Ballgown (`rule de`)
 
 - Performing DE with the R script provided in `src/de_ballgown.R`
 
