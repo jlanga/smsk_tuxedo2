@@ -29,11 +29,7 @@ rule all:
         # MAP + "exons.tsv",
         # MAP + "reference",
         # expand(
-        #     MAP + "{sample}.sam",
-        #     sample=SAMPLES_PE
-        # ),
-        # expand(
-        #     MAP + "{sample}.sam",
+        #     MAP + "{sample}.cram",
         #     sample=SAMPLES_PE
         # ),
         # QUANT
@@ -59,3 +55,29 @@ rule all:
         # DE + "NM_012227.pdf",
         # DE + "xist.pdf",
         # DE + "plotMeans.pdf"
+
+
+
+rule map:
+    """Build index and map"""
+    input:
+        expand(
+            MAP + "{sample}.cram",
+            sample=SAMPLES_PE
+        )
+
+
+rule quant:
+    """Assemble and quantify"""
+    input:
+        expand(
+            QUANT + "{sample}/{sample}_ballgown.gtf",
+            sample=SAMPLES_PE
+        )
+
+
+
+rule de:
+    """Perform differential expression analysis"""
+    input:
+        DE + "ballgown.RData"
