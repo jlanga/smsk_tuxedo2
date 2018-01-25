@@ -60,9 +60,10 @@ rule map_hisat2_align:
             extension="1 2 3 4 5 6 7 8".split()
         ),
         forward=RAW + "{sample}_1.fq.gz",
-        reverse=RAW + "{sample}_2.fq.gz"
+        reverse=RAW + "{sample}_2.fq.gz",
+        reference=RAW + "reference.fa"
     output:
-        bam = temp(MAP + "{sample}.bam")
+        cram = protected(MAP + "{sample}.cram")
     threads:
         1000
     log:
@@ -80,6 +81,8 @@ rule map_hisat2_align:
         "| samtools sort "
             "-@ {threads} "
             "-l 9 "
-            "-o {output.bam} "
+            "--output-fmt CRAM "
+            "--reference {input.reference} "
+            "-o {output.cram} "
             "- ) "
         "2> {log}"
