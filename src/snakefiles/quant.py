@@ -81,6 +81,7 @@ rule quant_gffcompare:
         "2> {log}"
 
 
+
 rule quant_stringtie_quant:
     """Quantify abundances with StringTie"""
     input:
