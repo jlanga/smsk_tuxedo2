@@ -1,8 +1,9 @@
-rule quant_stringtie:
+rule quant_stringtie_assemble:
     """assemble transcripts with stringtie"""
     input:
-        bam = MAP + "{sample}.bam",
-        gtf = RAW + "reference.gtf"
+        cram = MAP + "{sample}.cram",
+        gtf = RAW + "reference.gtf",
+        reference_fa = RAW + "reference.fa"
     output:
         gtf = QUANT + "{sample}/{sample}.gtf"
     threads:
@@ -14,12 +15,16 @@ rule quant_stringtie:
     benchmark:
         QUANT + "{sample}/stringtie_{sample}.benchmark"
     shell:
-        "stringtie "
+        "(samtools view "
+            "-h "
+            "--reference {input.reference_fa} "
+            "{input.cram} "
+        "| stringtie "
             "-p {threads} "
             "-G {input.gtf} "
             "-o {output.gtf} "
             "-l {params.label} "
-            "{input.bam} "
+            "- )"
         "2> {log}"
 
 
@@ -80,7 +85,8 @@ rule quant_stringtie_quant:
     """Quantify abundances with StringTie"""
     input:
         merged_gtf = QUANT + "merged.gtf",
-        sample_bam = MAP + "{sample}.bam"
+        sample_cram = MAP + "{sample}.cram",
+        reference_fa = RAW + "reference.fa"
     output:
         ballgown_gtf = QUANT + "{sample}/{sample}_ballgown.gtf"
     threads:
@@ -90,11 +96,15 @@ rule quant_stringtie_quant:
     benchmark:
         QUANT + "{sample}/stringtie_quant_{sample}.benchmark"
     shell:
-        "stringtie -e -B "
+        "(samtools view "
+            "-h "
+            "--reference {input.reference_fa} "
+            "{input.sample_cram} "
+        "| stringtie "
             "-e "
             "-B "
             "-p {threads} "
             "-G {input.merged_gtf} "
             "-o {output.ballgown_gtf} "
-            "{input.sample_bam} "
+            "- ) "
         "2> {log}"
