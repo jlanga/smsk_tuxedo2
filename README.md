@@ -90,7 +90,7 @@ smsk
 
 - Visualization should be done interactively.
 
-![dag](https://raw.github.com/jlanga/smsk_tuxedo2/master/dag.svg)
+![rulegraph](https://raw.github.com/jlanga/smsk_tuxedo2/master/rulegraph.svg?sanitize=true)
 
 
 
