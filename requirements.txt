@@ -9,3 +9,5 @@ r-devtools
 r-dplyr
 bioconductor-ballgown==2.2.0
 bioconductor-biocinstaller
+gffcompare==0.9.8
+readline==6.2

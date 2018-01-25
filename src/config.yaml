@@ -1,6 +1,67 @@
-samples:
-    A: results/raw/samples/A.fastq
-    B: results/raw/samples/B.fastq
+samples_pe:
+    ERR188245:
+        forward: data/reads/ERR188245_chrX_1.fastq.gz
+        reverse: data/reads/ERR188245_chrX_2.fastq.gz
+        sex: F
+        population: GBR
+    ERR188428:
+        forward: data/reads/ERR188428_chrX_1.fastq.gz
+        reverse: data/reads/ERR188428_chrX_2.fastq.gz
+        sex: F
+        population: GBR
+    ERR188337:
+        forward: data/reads/ERR188337_chrX_1.fastq.gz
+        reverse: data/reads/ERR188337_chrX_2.fastq.gz
+        sex: F
+        population: GBR
+    ERR188401:
+        forward: data/reads/ERR188401_chrX_1.fastq.gz
+        reverse: data/reads/ERR188401_chrX_2.fastq.gz
+        sex: M
+        population: GBR
+    ERR188257:
+        forward: data/reads/ERR188257_chrX_1.fastq.gz
+        reverse: data/reads/ERR188257_chrX_2.fastq.gz
+        sex: M
+        population: GBR
+    ERR188383:
+        forward: data/reads/ERR188383_chrX_1.fastq.gz
+        reverse: data/reads/ERR188383_chrX_2.fastq.gz
+        sex: M
+        population: GBR
+    ERR204916:
+        forward: data/reads/ERR204916_chrX_1.fastq.gz
+        reverse: data/reads/ERR204916_chrX_2.fastq.gz
+        sex: F
+        population: YRI
+    ERR188234:
+        forward: data/reads/ERR188234_chrX_1.fastq.gz
+        reverse: data/reads/ERR188234_chrX_2.fastq.gz
+        sex: F
+        population: YRI
+    ERR188273:
+        forward: data/reads/ERR188273_chrX_1.fastq.gz
+        reverse: data/reads/ERR188273_chrX_2.fastq.gz
+        sex: F
+        population: YRI
+    ERR188454:
+        forward: data/reads/ERR188454_chrX_1.fastq.gz
+        reverse: data/reads/ERR188454_chrX_2.fastq.gz
+        sex: M
+        population: YRI
+    ERR188104:
+        forward: data/reads/ERR188104_chrX_1.fastq.gz
+        reverse: data/reads/ERR188104_chrX_2.fastq.gz
+        sex: M
+        population: YRI
+    ERR188044:
+        forward: data/reads/ERR188044_chrX_1.fastq.gz
+        reverse: data/reads/ERR188044_chrX_2.fastq.gz
+        sex: M
+        population: YRI
 
-urls:
-    tarball: https://bitbucket.org/snakemake/snakemake/downloads/snakemake-tutorial-data.tar.gz
+
+
+reference:
+    fasta: data/reference/chrX.fa
+    gtf: data/reference/chrX.gtf

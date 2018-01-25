@@ -1,86 +1,99 @@
-rule map_hisat_index:
+rule map_extract_splice_sites:
+    """Get splice sites from GTF"""
     input:
-        raw_dir + "genome.fa"
+        genes = RAW + "reference.gtf"
     output:
-        expand(
-            raw_dir + "genome.fa.{extension}",
-            extension = "amb ann bwt pac sa".split(" ")
-        )
-    threads:
-        1
-    log:
-        map_dir + "bwa_index.log"
-    benchmark:
-        map_dir + "bwa_index.json"
+        splice_sites = MAP + "splice_sites.tsv"
     shell:
-        "bwa index "
-            "{input} "
-        "2> {log}"
+        "extract_splice_sites.py {input} > {output}"
 
 
 
-rule map_bwa_sample:
+rule map_extract_exons:
+    """Get exon sites from GTF"""
     input:
-        genome = raw_dir + "genome.fa",
-        sample = lambda wildcards: config["samples"][wildcards.sample],
-        ref_files = expand(
-            raw_dir + "genome.fa.{extension}",
-            extension = "amb ann bwt pac sa".split(" ")
-        )
+        genes = RAW + "reference.gtf"
     output:
-        temp(
-            map_dir + "{sample}.unsorted.bam"
-        )
+        splice_sites = MAP + "exons.tsv"
+    shell:
+        "extract_exons.py {input} > {output}"
+
+
+
+rule map_hisat2_build:
+    """Build HISAT2 index"""
+    input:
+        fa = RAW + "reference.fa",
+        splice_sites = MAP + "splice_sites.tsv",
+        exons = MAP + "exons.tsv"
+    output:
+        suffixes=protected(expand(
+            MAP + "reference.{extension}.ht2",
+            extension="1 2 3 4 5 6 7 8".split()
+        )),
+        mock=protected(touch(MAP + "reference"))
     params:
-        rg="@RG\tID:{sample}\tSM:{sample}"
-    log:
-        map_dir + "bwa_{sample}.log"
-    benchmark:
-        map_dir + "bwa_{sample}.json"
+        prefix = MAP + "reference"
     threads:
-        8
+        1000
+    log:
+        MAP + "hisat2_build.log"
+    benchmark:
+        MAP + "hisat2_build.benchmark"
     shell:
-        "(bwa mem -R '{params.rg}' -t {threads} {input.genome} {input.sample} | "
-        "samtools view -Sb - "
-        "> {output}) "
+        "hisat2-build "
+            "-p {threads} "
+            "--ss {input.splice_sites} "
+            "--exon {input.exons} "
+            "{input.fa} "
+            "{params.prefix} "
         "2> {log}"
 
 
 
-rule map_sort_sample:
+rule map_hisat2_align:
+    """Just map reads with hisat"""
     input:
-        map_dir + "{sample}.unsorted.bam"
+        index_prefix= MAP + "reference",
+        index_files=expand(
+            MAP + "reference.{extension}.ht2",
+            extension="1 2 3 4 5 6 7 8".split()
+        ),
+        forward=RAW + "{sample}_1.fq.gz",
+        reverse=RAW + "{sample}_2.fq.gz"
     output:
-        protected("results/map/{sample}.sorted.bam")
+        sam = temp(MAP + "{sample}.sam")
+    threads:
+        1000
     log:
-        map_dir + "sort_{sample}.log"
+        MAP + "hisat2_align_{sample}.log"
     benchmark:
-        map_dir + "sort_{sample}.json"
+        MAP + "hisat2_align_{sample}.benchmark"
     shell:
-        "samtools sort "
-            "-T $(mktemp --dry-run) "
-            "-O bam {input} "
-        "> {output} "
+        "hisat2 "
+            "--threads {threads} "
+            "--dta "
+            "-x {input.index_prefix} "
+            "-1 {input.forward} "
+            "-2 {input.reverse} "
+            "-S {output.sam} "
         "2> {log}"
 
 
 
-rule map_index_sample:
+rule map_samtools_sort:
+    """Use samtools to view + sort and convert to bam. original pipeline just sorted!"""
     input:
-        map_dir + "{sample}.sorted.bam"
+        sam = MAP + "{sample}.sam"
     output:
-        protected(map_dir + "{sample}.sorted.bam.bai")
+        bam = protected(MAP + "{sample}.bam")
+    threads:
+        1000
     log:
-        map_dir + "index_{sample}.log"
+        MAP + "samtools_sort_{sample}.log"
     benchmark:
-        map_dir + "index_{sample}.json"
+        MAP + "samtools_sort_{sample}.json"
     shell:
-        "samtools index {input} > {log} 2>&1"
-
-
-rule map:
-    input:
-        expand(
-            map_dir + "{sample}.sorted.bam.bai",
-            sample = config["samples"]
-        )
+        "(samtools view -Shu {input.sam} "
+        "| samtools sort -@ {threads} -f - {output.bam}) "
+        "2> {log}"

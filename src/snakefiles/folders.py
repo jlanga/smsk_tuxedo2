@@ -1,4 +1,4 @@
-raw_dir= "results/raw/"
-map_dir= "results/map/"
-call_dir= "results/call/"
-call_doc= "doc/call/"
+RAW = "results/raw/"
+MAP = "results/map/"
+QUANT = "results/quant/"
+DE = "results/de/"
