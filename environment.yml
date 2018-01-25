@@ -41,7 +41,7 @@ dependencies:
   - r-lambda.r=1.1.7=r3.2.2_0
   - r-magrittr=1.5=r3.2.2_0
   - r-snow=0.4_1=r3.2.2_0
-  - samtools=0.1.19=2
+  - samtools=1.6=0
   - snakemake=4.4.0=py35_0
   - stringtie=1.3.3=py35_2
   - aioeasywebdav=2.2.0=py35_0
@@ -64,6 +64,7 @@ dependencies:
   - asn1crypto=0.24.0=py35_0
   - async-timeout=2.0.0=py35h12a94dc_0
   - bcrypt=3.1.4=py35ha35c455_0
+  - bzip2=1.0.6=h6d464ef_2
   - ca-certificates=2017.08.26=h1d4fec5_0
   - certifi=2017.11.5=py35h9749603_0
   - cffi=1.11.4=py35h9745a5d_0
