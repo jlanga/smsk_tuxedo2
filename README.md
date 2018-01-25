@@ -1,12 +1,17 @@
 # smsk: A Snakemake skeleton to jumpstart projects
 
-[![Build Status](https://travis-ci.org/jlanga/smsk.svg?branch=master)](https://travis-ci.org/jlanga/smsk)
+[![Build Status](https://travis-ci.org/jlanga/smsk_tuxedo2.svg?branch=master)](https://travis-ci.org/jlanga/smsk_tuxedo2)
+
+
 
 ## 1. Description
 
-This is a small skeleton to create Snakemake workflows. [Snakemake](https://bitbucket.org/snakemake/snakemake/wiki/Home) "is a workflow management system that aims to reduce the complexity of creating workflows by providing a fast and comfortable execution environment, together with a clean and modern specification language in python style."
+This is a SnakeMake workflow to apply the protocol described in Pertea et al. 2016. With some
+modifications.
 
-The idea is to create a workflow with of snakefiles, resolve dependencies with `conda`, `pip`, tarballs, and if there is no other option, `docker`.
+The idea is to produce Differential Expression analysis given a bunch of FASTQ files,
+
+
 
 ## 2. First steps
 
@@ -21,21 +26,23 @@ Follow the contents of the `.travis.yml` file:
 1. Installation
 
     ```sh
-    git clone https://github.com/jlanga/smsk.git smsk 
-    cd smsk
-    bash src/install/conda_env.sh  # Dowload packages and create an environment
+    git clone https://github.com/jlanga/smsk_tuxedo2.git smsk_tuxedo2
+    cd smsk_tuxedo2
+    bash src/install/conda_env.sh
     ```
 
 2. Activate the environment (`source deactivate` to deactivate):
     ```sh
-    source activate smsk
+    source activate smsk_tuxedo2
     ```
 
-3. Execute the pipeline:
+3. Execute the test pipeline:
 
     ```sh
     snakemake -j
     ```
+
+4.  Modify the `src/config.yaml` with your samples, reference genome and GTF files.
 
 
 
@@ -45,106 +52,62 @@ The hierarchy of the folder is the one described in [Good enough practices in sc
 
 ```
 smsk
-├── bin: external scripts/binaries
-├── data: raw data or links to backup data.
-├── doc: documentation.
+├── bin/: external scripts/binaries
+├── data/: test data.
+├── doc/: documentation.
 ├── README.md
-├── results: processed data.
-├── Snakefile: driver script of the project. Mostly links to src/snakefiles.
-└── src: project's source code, config.yaml, snakefiles tarballs, etc.
+├── results:
+|   ├── raw: links to your raw data.
+|   ├── map: files from HISAT2 mapping: index and CRAM files.
+|   ├── quant: files from StringTie assembly and quantification
+|   └── de: files from Ballgown: differential expression tables, RData objects for closer inspection.
+├── Snakefile: driver script of the project.
+├── environment.yml: packages to execute the analysis.
+└── src: snakefiles, installers, config.yaml, R scripts.
 ```
 
 
 
-## 4. Writting workflow considerations
+## 4. Workflow description
 
-- The workflow should be written in the main `Snakefile` and all the subworkflows in `src/snakefiles`.
+### 4.1 Mapping with HISAT2
 
-- Split into different snakefiles as much as possible. This way code supervision is more bearable and you can recycle them for other projects.
+- Index is build from scratch
 
-- Start each rule name with the name of the subworkflow (`map`), and mark that it is executed over a item (`_sample`): `map_bowtie_sample`, `map_sort_sample`, `map_index_sample`.
+- Exons and splicing sites are computed from the reference GTF file
 
-- Use a snakefile to store all the folder names instead of typing them explicitelly (`bin/snakefiles/folders`), and using variables with the convention `SUBWORKFLOW_NAME`: `map_bwa_sample`, `map_sort_sample`, etc.
+- Paired reads are mapped with HISAT2. Results are compressed to CRAM on the fly.
 
-- End a workflow with a checkpoint rule: a rule that takes as input the result of the workflow (`map`). Use the subworkflow name as a folder name to store its results: `map` results go into `results/map/`.
+### 4.2 Transcript assembly and quantification with StringTie
 
-- Log everything. Store it next to the results: `rule/rest_of_rule_name_sample.log`. Store also benchmarks in JSON format. Consider even creating a subfolder if the total number of files is too high.
+- Using the exact parameters from Pertea et al. 2016
 
-- End it also with a clean rule that deletes everything of the workflow (`clean_map`).
+- CRAM -> SAM conversion on the fly
 
-- Use the `bin/snakefiles/raw` to get/link your raw data, databases, etcetera. You should be careful when cleaning this folder.
+### 4.3 Differential expression analysis with Ballgown
 
-- Configuration for software, samples, etcetera, should be written in the `config.yaml` (instead of hardcoding them somewhere in a 1000 line script). Command line software usually comes with mandatory parameters and optional ones. Ideally, write the mandatory ones in each snakefile and the optional in `config.yaml`.
+- Performing DE with the R script provided in `src/de_ballgown.R`
 
-- `shell.prefix("set -euo pipefail;")` in the first line of the Snakefile makes the entire workflow to stop in case of even a warning or a exit error different of 0. Maybe non necessary anymore (2016/12/13).
+- Visualization should be done interactively.
 
-- If compressing, use `pigz`, `pbzip2` or `pxz` instead of `gzip`. Get them from `conda`.
-
-- Install as many possible packages from `conda` and `pip` instead of using `apt`/`apt-get`: software is more recent, and you don't have to unzip tarballs or rely on your sysadmin. This way your workflow is more reproducible. The problem I see with `brew` is that you cannot specify an exact version.
-
-- To install software from tarballs, download them into `src/` and copy binaries to `bin/` (and write the steps in `bin/install/from_tarball.sh`):
-
-    ```sh
-    # Binaries are already compiled
-    wget \
-        --continue \
-        --output-document src/bin1.tar.gz \
-        http://bin1.com/bin1.tar.gz
-    tar xvf src/bin1.tar.gz
-    cp src/bin1/bin1 bin/ # or link
-
-    # Tarball contains the source
-    wget \
-        --continue \
-        --output-document src/bin2.tar.gz \
-        http://bin2.com/bin2.tar.gz
-    tar xvf src/bin2.tar.gz
-    pushd src/bin2/
-    make -j
-    cp build/bin2 ../../bin/
-    ```
-
-- Use as much as possible `temp()` and `protected()` so you save space and also protect yourself from deleting everything.
-
-- Pipe and compress as much as possible. Make use of the [process substitution](http://vincebuffalo.org/blog/2013/08/08/using-names-pipes-and-process-substitution-in-bioinformatics.html) feature in `bash`: `cmd <(gzip -dc fa.gz)` and `cmd >(gzip -9 > file.gz)`. The problem is that it is hard to estimate the CPU usage of each step of the workflow.
-
-- End each subworkflow with a report for your own sanity. Or write the rules in `bin/snakefiles/report`
-
-- Use in command line applications long flags (`wget --continue $URL`): this way it is more readable. The computer does not care and is not going to work slower.
-
-- If software installation is too complex, consider pulling a docker image.
+![dag](https://raw.github.com/jlanga/smsk_tuxedo2/master/dag.svg)
 
 
-## 5. Considerations when installing software
-
-As a rule of thumb, download python packages with `conda`, use `pip` whenever possible, download binary tarballs into `src/` and copy them to `bin/` or download the source tarball and compile it. Example:
-
-   ```
-   conda install \
-       samtools
-   
-   pip install \
-       snakemake
-
-   wget \
-       --continue \
-       --output-document src/bin1.tar.gz \
-       http://bin1.com/bin1.tar.gz
-   tar xvf src/bin1.tar.gz
-   cp src/bin1/bin1 bin/  # or link
-
-   wget \
-       --continue \
-       --output-document src/bin2.tar.gz \
-       http://bin2.com/bin2.tar.gz
-   tar xvf src/bin2.tar.gz
-   pushd src/bin2/
-   make -j
-   cp build/bin2 ../../bin/
-   ```
 
 ## Bibliography
 
-- [A Quick Guide to Organizing Computational Biology Projects](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424)
+- Transcript-level expression analysis of RNA-seq experiments with HISAT, StringTie and Ballgown. Pertea et al 2016
 
-- [Snakemake—a scalable bioinformatics workflow engine](http://bioinformatics.oxfordjournals.org/content/28/19/2520)
+- The Sequence Alignment/Map format and SAMtools. Li et al.
+
+- HISAT: a fast spliced aligner with low memory requirements. Kim et al.
+
+- StringTie enables improved reconstruction of a transcriptome from RNA-seq reads. Pertea et al.
+
+- Flexible isoform-level differential expression analysis with Ballgown. Frazee et al.
+
+- RSkittleBrewer. Frazee et al. https://github.com/alyssafrazee/RSkittleBrewer
+
+- SnakeMake - A scalable workflow engine. Köster et al.
+
+- smsk - a snakemake skeleton to jumpstart your projects. Langa. http://github.com/jlanga/smsk
