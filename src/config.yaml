@@ -1,67 +1,67 @@
 samples_pe:
     ERR188245:
-        forward: data/reads/ERR188245_chrX_1.fastq.gz
-        reverse: data/reads/ERR188245_chrX_2.fastq.gz
+        forward: data/reads/ERR188245_sub_1.fq.gz
+        reverse: data/reads/ERR188245_sub_2.fq.gz
         sex: F
         population: GBR
     ERR188428:
-        forward: data/reads/ERR188428_chrX_1.fastq.gz
-        reverse: data/reads/ERR188428_chrX_2.fastq.gz
+        forward: data/reads/ERR188428_sub_1.fq.gz
+        reverse: data/reads/ERR188428_sub_2.fq.gz
         sex: F
         population: GBR
     ERR188337:
-        forward: data/reads/ERR188337_chrX_1.fastq.gz
-        reverse: data/reads/ERR188337_chrX_2.fastq.gz
+        forward: data/reads/ERR188337_sub_1.fq.gz
+        reverse: data/reads/ERR188337_sub_2.fq.gz
         sex: F
         population: GBR
     ERR188401:
-        forward: data/reads/ERR188401_chrX_1.fastq.gz
-        reverse: data/reads/ERR188401_chrX_2.fastq.gz
+        forward: data/reads/ERR188401_sub_1.fq.gz
+        reverse: data/reads/ERR188401_sub_2.fq.gz
         sex: M
         population: GBR
     ERR188257:
-        forward: data/reads/ERR188257_chrX_1.fastq.gz
-        reverse: data/reads/ERR188257_chrX_2.fastq.gz
+        forward: data/reads/ERR188257_sub_1.fq.gz
+        reverse: data/reads/ERR188257_sub_2.fq.gz
         sex: M
         population: GBR
     ERR188383:
-        forward: data/reads/ERR188383_chrX_1.fastq.gz
-        reverse: data/reads/ERR188383_chrX_2.fastq.gz
+        forward: data/reads/ERR188383_sub_1.fq.gz
+        reverse: data/reads/ERR188383_sub_2.fq.gz
         sex: M
         population: GBR
     ERR204916:
-        forward: data/reads/ERR204916_chrX_1.fastq.gz
-        reverse: data/reads/ERR204916_chrX_2.fastq.gz
+        forward: data/reads/ERR204916_sub_1.fq.gz
+        reverse: data/reads/ERR204916_sub_2.fq.gz
         sex: F
         population: YRI
     ERR188234:
-        forward: data/reads/ERR188234_chrX_1.fastq.gz
-        reverse: data/reads/ERR188234_chrX_2.fastq.gz
+        forward: data/reads/ERR188234_sub_1.fq.gz
+        reverse: data/reads/ERR188234_sub_2.fq.gz
         sex: F
         population: YRI
     ERR188273:
-        forward: data/reads/ERR188273_chrX_1.fastq.gz
-        reverse: data/reads/ERR188273_chrX_2.fastq.gz
+        forward: data/reads/ERR188273_sub_1.fq.gz
+        reverse: data/reads/ERR188273_sub_2.fq.gz
         sex: F
         population: YRI
     ERR188454:
-        forward: data/reads/ERR188454_chrX_1.fastq.gz
-        reverse: data/reads/ERR188454_chrX_2.fastq.gz
+        forward: data/reads/ERR188454_sub_1.fq.gz
+        reverse: data/reads/ERR188454_sub_2.fq.gz
         sex: M
         population: YRI
     ERR188104:
-        forward: data/reads/ERR188104_chrX_1.fastq.gz
-        reverse: data/reads/ERR188104_chrX_2.fastq.gz
+        forward: data/reads/ERR188104_sub_1.fq.gz
+        reverse: data/reads/ERR188104_sub_2.fq.gz
         sex: M
         population: YRI
     ERR188044:
-        forward: data/reads/ERR188044_chrX_1.fastq.gz
-        reverse: data/reads/ERR188044_chrX_2.fastq.gz
+        forward: data/reads/ERR188044_sub_1.fq.gz
+        reverse: data/reads/ERR188044_sub_2.fq.gz
         sex: M
         population: YRI
 
 
 
 reference:
-    fasta: data/reference/chrX.fa
-    gtf: data/reference/chrX.gtf
+    fasta: data/reference/chrX_sub.fa
+    gtf: data/reference/chrX_sub.gtf
