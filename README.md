@@ -1,4 +1,4 @@
-# smsk_tuxedo2: snakemake pipeline to produce the tuxedo v2 pipeline from Nature protocols
+# smsk_tuxedo2: snakemake files of the tuxedo v2 pipeline from Pertea et al 2016
 
 [![Build Status](https://travis-ci.org/jlanga/smsk_tuxedo2.svg?branch=master)](https://travis-ci.org/jlanga/smsk_tuxedo2)
 
