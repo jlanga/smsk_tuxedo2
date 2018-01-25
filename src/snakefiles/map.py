@@ -5,7 +5,7 @@ rule map_extract_splice_sites:
     output:
         splice_sites = MAP + "splice_sites.tsv"
     shell:
-        "extract_splice_sites.py {input} > {output}"
+        "hisat2_extract_splice_sites.py {input} > {output}"
 
 
 
@@ -16,7 +16,7 @@ rule map_extract_exons:
     output:
         splice_sites = MAP + "exons.tsv"
     shell:
-        "extract_exons.py {input} > {output}"
+        "hisat2_extract_exons.py {input} > {output}"
 
 
 
