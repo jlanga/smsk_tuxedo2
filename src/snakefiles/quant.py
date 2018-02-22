@@ -14,6 +14,8 @@ rule quant_stringtie_assemble:
         QUANT + "{sample}/stringtie_{sample}.log"
     benchmark:
         QUANT + "{sample}/stringtie_{sample}.benchmark"
+    conda:
+        "quant.yml"
     shell:
         "(samtools view "
             "-h "
@@ -45,6 +47,8 @@ rule quant_stringtie_merge:
         QUANT + "stringtie_merge.log"
     benchmark:
         QUANT + "stringtie_merge.benchmark"
+    conda:
+        "quant.yml"
     shell:
         "stringtie "
             "--merge "
@@ -72,6 +76,8 @@ rule quant_gffcompare:
         QUANT + "gffcompare.log"
     benchmark:
         QUANT + "gffcompare.benchmark"
+    conda:
+        "quant.yml"
     shell:
         "gffcompare "
             "-r {input.ref_gtf} "
@@ -96,6 +102,8 @@ rule quant_stringtie_quant:
         QUANT + "{sample}/stringtie_quant_{sample}.log"
     benchmark:
         QUANT + "{sample}/stringtie_quant_{sample}.benchmark"
+    conda:
+        "quant.yml"
     shell:
         "(samtools view "
             "-h "
