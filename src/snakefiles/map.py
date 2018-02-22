@@ -4,6 +4,8 @@ rule map_extract_splice_sites:
         genes = RAW + "reference.gtf"
     output:
         splice_sites = MAP + "splice_sites.tsv"
+    conda:
+        "map.yml"
     shell:
         "hisat2_extract_splice_sites.py {input} > {output}"
 
@@ -15,6 +17,8 @@ rule map_extract_exons:
         genes = RAW + "reference.gtf"
     output:
         splice_sites = MAP + "exons.tsv"
+    conda:
+        "map.yml"
     shell:
         "hisat2_extract_exons.py {input} > {output}"
 
@@ -40,6 +44,8 @@ rule map_hisat2_build:
         MAP + "hisat2_build.log"
     benchmark:
         MAP + "hisat2_build.benchmark"
+    conda:
+        "map.yml"
     shell:
         "hisat2-build "
             "-p {threads} "
@@ -70,6 +76,8 @@ rule map_hisat2_align:
         MAP + "hisat2_align_{sample}.log"
     benchmark:
         MAP + "hisat2_align_{sample}.benchmark"
+    conda:
+        "map.yml"
     shell:
         "(hisat2 "
             "--threads {threads} "
