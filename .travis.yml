@@ -20,9 +20,7 @@ before_install:
 install:
   - export PATH="/home/travis/miniconda3/bin:$PATH"
   - echo $PATH
-  - bash src/install/conda_env.sh
-  - source activate smsk_tuxedo2
-  - Rscript src/install/install_r_packages.R
+  - conda install --yes snakemake
 
 script:
   - export PATH="/home/travis/miniconda3/bin:$PATH"
