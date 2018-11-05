@@ -10,7 +10,8 @@ library(dplyr)
 library(devtools)
 
 # Read phenotype data
-pheno_data <- read.csv("results/de/pheno_data.tsv") %>% arrange(ids)
+pheno_data <- read.table("results/de/pheno_data.tsv", sep="\t", header=T) %>%
+    arrange(ids)
 
 # Read expression data
 bg_chrX <- ballgown(
