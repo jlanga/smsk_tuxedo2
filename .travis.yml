@@ -22,6 +22,9 @@ before_install:
 install:
     - export PATH="/home/travis/miniconda3/bin:$PATH"
     - echo $PATH
+    - conda config --add channels defaults
+    - conda config --add channels bioconda
+    - conda config --add channels conda-forge
     - conda install --yes -c bioconda snakemake=5.0
 
 script:
