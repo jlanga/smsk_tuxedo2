@@ -28,5 +28,4 @@ install:
 script:
     - export PATH="/home/travis/miniconda3/bin:$PATH"
     - echo $PATH
-    - source activate smsk_tuxedo2
-    - snakemake -j
+    - snakemake --use-conda -j
