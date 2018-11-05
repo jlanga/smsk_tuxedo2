@@ -1,3 +1,5 @@
+# Config.yaml
+---
 samples_pe:
     ERR188245:
         forward: data/reads/ERR188245_sub_1.fq.gz
@@ -59,7 +61,6 @@ samples_pe:
         reverse: data/reads/ERR188044_sub_2.fq.gz
         sex: M
         population: YRI
-
 
 
 reference:
