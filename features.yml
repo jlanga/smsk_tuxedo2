@@ -1,0 +1,5 @@
+# Paths to references
+---
+reference:
+    fasta: data/reference/chrX_sub.fa
+    gtf: data/reference/chrX_sub.gtf

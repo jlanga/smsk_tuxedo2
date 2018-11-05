@@ -10,6 +10,7 @@ rule de_install_r_packages:
     shell:
         "Rscript src/install/install_r_packages.R 2> {log}"
 
+
 rule de_compose_phenotype_data:
     output:
         tsv=DE + "pheno_data.tsv"
@@ -18,15 +19,14 @@ rule de_compose_phenotype_data:
     benchmark:
         DE + "compose_pheno_data.benchmark"
     run:
-        with open(output.tsv, "w") as f_out:
-            print('"ids","sex","population"', file=f_out)
-            for sample in SAMPLES_PE:
-                sex = config["samples_pe"][sample]["sex"]
-                population = config["samples_pe"][sample]["population"]
-                print('"{sample}","{sex}","{population}"'.format(
-                    sample=sample, sex=sex, population=population
-                ),file=f_out)
-
+        samples\
+            [["sample", "sex", "population"]]\
+            .rename(columns={"sample": "ids"})\
+            .to_csv(
+                path_or_buf=output.tsv,
+                sep="\t",
+                index=False
+            )
 
 
 rule de_ballgown:
