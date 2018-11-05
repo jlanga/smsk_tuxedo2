@@ -1,0 +1,3 @@
+[submodule "src/snakehooks"]
+	path = src/snakehooks
+	url = git@github.com:jlanga/snakehooks.git
