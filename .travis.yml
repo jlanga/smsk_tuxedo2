@@ -23,7 +23,6 @@ install:
     - export PATH="/home/travis/miniconda3/bin:$PATH"
     - echo $PATH
     - conda install --yes -c bioconda snakemake
-    - conda env create -f .travis_env.yml
 
 script:
     - export PATH="/home/travis/miniconda3/bin:$PATH"
