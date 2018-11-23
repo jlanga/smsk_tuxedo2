@@ -6,8 +6,6 @@ rule quant_stringtie_assemble:
         reference_fa = RAW + "reference.fa"
     output:
         gtf = QUANT + "{sample}/{sample}.gtf"
-    threads:
-        1000
     params:
         label = "{sample}"
     log:
@@ -41,8 +39,6 @@ rule quant_stringtie_merge:
         )
     output:
         gtf = QUANT + "merged.gtf"
-    threads:
-        10000
     log:
         QUANT + "stringtie_merge.log"
     benchmark:
@@ -96,8 +92,6 @@ rule quant_stringtie_quant:
         reference_fa = RAW + "reference.fa"
     output:
         ballgown_gtf = QUANT + "{sample}/{sample}_ballgown.gtf"
-    threads:
-        1000
     log:
         QUANT + "{sample}/stringtie_quant_{sample}.log"
     benchmark:
