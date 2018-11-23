@@ -1,8 +1,10 @@
+# Conda env for mapping
+---
 channels:
     - r
     - defaults
     - conda-forge
     - bioconda
 dependencies:
-- hisat2=2.1.0=py35pl5.22.0_0
-- samtools=1.6=0
+    - hisat2=2.1.0=py35pl5.22.0_0
+    - samtools=1.6=0

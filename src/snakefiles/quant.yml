@@ -1,9 +1,11 @@
+# Conda env for quantification
+---
 channels:
     - r
     - defaults
     - conda-forge
     - bioconda
 dependencies:
-  - samtools=1.6=0
-  - stringtie=1.3.3=py35_2
-  - gffcompare=0.9.8=0
+    - samtools=1.6=0
+    - stringtie=1.3.3=py35_2
+    - gffcompare=0.9.8=0

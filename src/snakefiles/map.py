@@ -71,7 +71,7 @@ rule map_hisat2_align:
     output:
         cram = protected(MAP + "{sample}.cram")
     threads:
-        1000
+        4  # Samtools is the bottleneck
     log:
         MAP + "hisat2_align_{sample}.log"
     benchmark:

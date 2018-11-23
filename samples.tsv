@@ -1,0 +1,13 @@
+sample	type	forward	reverse	sex	population
+ERR188245	PE	data/reads/ERR188245_sub_1.fq.gz	data/reads/ERR188245_sub_2.fq.gz	F	GBR
+ERR188428	PE	data/reads/ERR188428_sub_1.fq.gz	data/reads/ERR188428_sub_2.fq.gz	F	GBR
+ERR188337	PE	data/reads/ERR188337_sub_1.fq.gz	data/reads/ERR188337_sub_2.fq.gz	F	GBR
+ERR188401	PE	data/reads/ERR188401_sub_1.fq.gz	data/reads/ERR188401_sub_2.fq.gz	M	GBR
+ERR188257	PE	data/reads/ERR188257_sub_1.fq.gz	data/reads/ERR188257_sub_2.fq.gz	M	GBR
+ERR188383	PE	data/reads/ERR188383_sub_1.fq.gz	data/reads/ERR188383_sub_2.fq.gz	M	GBR
+ERR204916	PE	data/reads/ERR204916_sub_1.fq.gz	data/reads/ERR204916_sub_2.fq.gz	F	YBR
+ERR188234	PE	data/reads/ERR188234_sub_1.fq.gz	data/reads/ERR188234_sub_2.fq.gz	F	YBR
+ERR188273	PE	data/reads/ERR188273_sub_1.fq.gz	data/reads/ERR188273_sub_2.fq.gz	F	YBR
+ERR188454	PE	data/reads/ERR188245_sub_1.fq.gz	data/reads/ERR188245_sub_2.fq.gz	M	YBR
+ERR188104	PE	data/reads/ERR188104_sub_1.fq.gz	data/reads/ERR188104_sub_2.fq.gz	M	YBR
+ERR188044	PE	data/reads/ERR188044_sub_1.fq.gz	data/reads/ERR188044_sub_2.fq.gz	M	YBR
