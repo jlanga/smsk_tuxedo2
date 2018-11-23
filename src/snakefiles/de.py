@@ -10,8 +10,8 @@ rule de_install_r_packages:
     shell:
         """
         Rscript \
-        -e \"BiocInstaller::biocLite(\"alyssafrazee/RSkittleBrewer\")\" \
-        2> {log}
+        -e 'BiocInstaller::biocLite("alyssafrazee/RSkittleBrewer")' \
+        2> {log} 1>&2
         """
 
 
