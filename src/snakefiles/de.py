@@ -8,7 +8,11 @@ rule de_install_r_packages:
     conda:
         "de.yml"
     shell:
-        "Rscript src/install/install_r_packages.R 2> {log}"
+        """
+        Rscript \
+        -e \"BiocInstaller::biocLite(\"alyssafrazee/RSkittleBrewer\")\" \
+        2> {log}
+        """
 
 
 rule de_compose_phenotype_data:
