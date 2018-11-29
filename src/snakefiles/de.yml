@@ -1,10 +1,9 @@
 # Conda env for differential expression
 ---
 channels:
-    - r
-    - defaults
     - conda-forge
     - bioconda
+    - defaults
 dependencies:
     - bioconductor-ballgown=2.2.0=0
     - bioconductor-genefilter=1.52.1=r3.2.2_0
