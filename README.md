@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/jlanga/smsk_tuxedo2.svg?branch=master)](https://travis-ci.org/jlanga/smsk_tuxedo2)
 
-
-
 ## 1. Description
 
 This is a SnakeMake workflow to apply the protocol described in Pertea et al. 2016. With some
@@ -11,46 +9,45 @@ modifications.
 
 The idea is to produce Differential Expression analysis given a bunch of FASTQ files,
 
-
-
 ## 2. First steps
 
 Follow the contents of the `.travis.yml` file:
 
-0. Install (ana|mini)conda
+1. Install (ana|mini)conda
 
-- [Anaconda](https://www.continuum.io/downloads)
+    - [Anaconda](https://www.continuum.io/downloads)
 
-- [miniconda](http://conda.pydata.org/miniconda.html)
+    - [miniconda](http://conda.pydata.org/miniconda.html)
 
-1. Installation
+2. Installation
 
     ```sh
     git clone https://github.com/jlanga/smsk_tuxedo2.git smsk_tuxedo2
     cd smsk_tuxedo2
-    bash src/install/conda_env.sh
-    ```
-
-2. Activate the environment (`source deactivate` to deactivate):
-    ```sh
-    source activate smsk_tuxedo2
+    snakemake --create-envs-only
     ```
 
 3. Execute the test pipeline:
 
     ```sh
-    snakemake -j
+    snakemake --use-conda -j
     ```
 
-4.  Modify the `src/config.yaml` with your samples, reference genome and GTF files.
+4. Modify the following files:
+    - `features.yml` with your reference genome and annotation,
+    - `samples.tsv` with the paths and info of your samples `src/config.yaml`
 
+5. Run the pipeline with your data:
 
+    ```sh
+    snakemake --use-conda -j
+    ```
 
 ## 3. File organization
 
 The hierarchy of the folder is the one described in [Good enough practices in scientific computing](https://swcarpentry.github.io/good-enough-practices-in-scientific-computing/):
 
-```
+```none
 smsk
 ├── bin/: external scripts/binaries
 ├── data/: test data.
@@ -65,8 +62,6 @@ smsk
 ├── environment.yml: packages to execute the analysis.
 └── src: snakefiles, installers, config.yaml, R scripts.
 ```
-
-
 
 ## 4. Workflow description
 
@@ -92,8 +87,6 @@ smsk
 
 ![rulegraph](https://raw.github.com/jlanga/smsk_tuxedo2/master/rulegraph.svg?sanitize=true)
 
-
-
 ## Bibliography
 
 - Transcript-level expression analysis of RNA-seq experiments with HISAT, StringTie and Ballgown. Pertea et al 2016
@@ -106,8 +99,8 @@ smsk
 
 - Flexible isoform-level differential expression analysis with Ballgown. Frazee et al.
 
-- RSkittleBrewer. Frazee et al. https://github.com/alyssafrazee/RSkittleBrewer
+- RSkittleBrewer. Frazee et al. ![https://github.com/alyssafrazee/RSkittleBrewer](https://github.com/alyssafrazee/RSkittleBrewer)
 
 - SnakeMake - A scalable workflow engine. Köster et al.
 
-- smsk - a snakemake skeleton to jumpstart your projects. Langa. http://github.com/jlanga/smsk
+- smsk - a snakemake skeleton to jumpstart your projects. Langa. ![http://github.com/jlanga/smsk](http://github.com/jlanga/smsk)
