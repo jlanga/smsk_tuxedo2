@@ -10,6 +10,7 @@ addons:
         - git
         - curl
         - gzip
+        - tar
 
 cache:
     timeout: 1000
