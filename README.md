@@ -24,7 +24,7 @@ Follow the contents of the `.travis.yml` file:
     ```sh
     git clone https://github.com/jlanga/smsk_tuxedo2.git smsk_tuxedo2
     cd smsk_tuxedo2
-    snakemake --create-envs-only
+    snakemake --use-conda --create-envs-only
     ```
 
 3. Execute the test pipeline:
