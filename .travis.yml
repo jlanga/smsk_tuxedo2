@@ -58,3 +58,4 @@ before_cache: |
     rm -rf "$CONDA_PATH"/{locks,pkgs,var,conda-meta/history}
 
 after_failure:
+    find results -name "*.log" -type f -printf '%Ts\t%p\n' | sort -nr | cut -f2 | xargs tail -n+1
