@@ -9,9 +9,9 @@ min_version("5.0")
 
 shell.prefix("set -euo pipefail;")
 
-params = yaml.load(open("params.yml", "r"))
-features = yaml.load(open("features.yml", "r"))
-samples = pd.read_table("samples.tsv")
+params = yaml.safe_load(open("params.yml", "r"))
+features = yaml.safe_load(open("features.yml", "r"))
+samples = pd.read_csv("samples.tsv", sep="\t")
 
 singularity: "docker://continuumio/miniconda3:4.4.10"
 
