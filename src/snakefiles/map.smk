@@ -65,8 +65,8 @@ rule map_hisat2_align:
             MAP + "reference.{extension}.ht2",
             extension="1 2 3 4 5 6 7 8".split()
         ),
-        forward=RAW + "{sample}_1.fq.gz",
-        reverse=RAW + "{sample}_2.fq.gz",
+        fwd=RAW + "{sample}_1.fq.gz",
+        rev=RAW + "{sample}_2.fq.gz",
         reference=RAW + "reference.fa"
     output:
         cram = protected(MAP + "{sample}.cram")
@@ -83,8 +83,8 @@ rule map_hisat2_align:
             "--threads {threads} "
             "--dta "
             "-x {input.index_prefix} "
-            "-1 {input.forward} "
-            "-2 {input.reverse} "
+            "-1 {input.fwd} "
+            "-2 {input.rev} "
             "-S /dev/stdout "
         "| samtools sort "
             "-@ {threads} "
